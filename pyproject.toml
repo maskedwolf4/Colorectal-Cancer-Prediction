@@ -1,7 +1,17 @@
 [project]
-name = "2fast2mcp"
+name = "colorectalcancersurvivalprediction"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "flask>=3.1.2",
+    "joblib>=1.5.3",
+    "kfp>=2.15.2",
+    "matplotlib>=3.10.8",
+    "mlflow>=1.27.0",
+    "numpy>=2.4.2",
+    "pandas>=3.0.0",
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+]
