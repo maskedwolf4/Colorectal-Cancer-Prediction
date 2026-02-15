@@ -7,6 +7,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.feature_selection import SelectKBest, chi2
 from src.logger import get_logger
 from src.custom_exception import CustomException
+import sys
 
 logger = get_logger(__name__)
 
