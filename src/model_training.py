@@ -6,6 +6,9 @@ from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
 from src.logger import get_logger
 from src.custom_exception import CustomException
 
+import mlflow
+import mlflow.sklearn
+
 logger = get_logger(__name__)
 
 class ModelTraining:
@@ -50,9 +53,12 @@ class ModelTraining:
             recall = recall_score(self.y_test , y_pred,  average="weighted")
             f1 = f1_score(self.y_test , y_pred,  average="weighted")
 
+            mlflow.log_metric("accuracy" , accuracy)
+            mlflow.log_metric("Precison" , precision)
+            mlflow.log_metric("Recall Score " , recall)
+            mlflow.log_metric("F1_score" , f1)
 
             logger.info(f"Accuracy : {accuracy} ; Precision : {precision} ; Recall : {recall} ; F1-Score : {f1}")
-
 
             logger.info("Model evaluation done...")
 
@@ -66,5 +72,6 @@ class ModelTraining:
         self.evaluate_model()
 
 if __name__=="__main__":
-    trainer = ModelTraining()
-    trainer.run()   
+    with mlflow.start_run():
+        trainer = ModelTraining()
+        trainer.run()   
