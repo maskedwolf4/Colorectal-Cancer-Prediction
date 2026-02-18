@@ -1,0 +1,52 @@
+# PIPELINE DEFINITION
+# Name: mlops-pipeline
+# Description: MLOps pipeline for colorectal cancer survival prediction
+components:
+  comp-data-processing-op:
+    executorLabel: exec-data-processing-op
+  comp-model-training-op:
+    executorLabel: exec-model-training-op
+deploymentSpec:
+  executors:
+    exec-data-processing-op:
+      container:
+        command:
+        - uv
+        - run
+        - python
+        - -m
+        - src.data_processing
+        image: maskedwolf4/colorectal-cancer-prediction:latest
+    exec-model-training-op:
+      container:
+        command:
+        - uv
+        - run
+        - python
+        - -m
+        - src.model_training
+        image: maskedwolf4/colorectal-cancer-prediction:latest
+pipelineInfo:
+  description: MLOps pipeline for colorectal cancer survival prediction
+  name: mlops-pipeline
+root:
+  dag:
+    tasks:
+      data-processing-op:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-data-processing-op
+        taskInfo:
+          name: data-processing-op
+      model-training-op:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-model-training-op
+        dependentTasks:
+        - data-processing-op
+        taskInfo:
+          name: model-training-op
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.15.2
